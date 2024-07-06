@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./fonts.css" />
+
+    <script src="./js/models/drawable-object.class.js"></script>
+    <script src="./js/models/moveable-object.class.js"></script>
+    <script src="./js/models/throwable-object.class.js"></script>
+    <script src="./js/models/health-bar.class.js"></script>
+    <script src="./js/models/coins-bar.class.js"></script>
+    <script src="./js/models/bottles-bar.class.js"></script>
+    <script src="./js/models/endboss-health-bar.class.js"></script>
+    <script src="./js/models/character.class.js"></script>
+    <script src="./js/models/chicken.class.js"></script>
+    <script src="./js/models/chickenSmall.class.js"></script>
+    <script src="./js/models/cloud.class.js"></script>
+    <script src="./js/models/background-object.class.js"></script>
+    <script src="./js/models/keyboard.class.js"></script>
+    <script src="./js/models/level.class.js"></script>
+    <script src="./js/models/endboss.class.js"></script>
+    <script src="./js/models/bottle.class.js"></script>
+    <script src="./js/models/coin.class.js"></script>
+    <script src="./js/levels/level1.js"></script>
+    <script src="./js/models/world.class.js"></script>
+    <script src="./js/game.js"></script>
+
+    <link rel="shortcut icon" href="./img/sombrero.png" />
+
+    <title>El Pollo Loco</title>
+  </head>
+
+  <body>
+    <h1>El Pollo Loco</h1>
+    <div class="mainContent" id="content" width="720" height="480">
+      <div id="iconBar" class="iconBar d-none">
+        <div id="frontPage">
+          <img src="./img/home.png" alt="Main Page" onclick="goToHome()" />
+        </div>
+
+        <div id="soundOn" onclick="soundOff()">
+          <img src="./img/buttons/sound_on.svg" alt="sound-on" />
+        </div>
+
+        <div id="soundOff" class="d-none" onclick="soundOn()">
+          <img src="./img/buttons/audio-remove.svg" alt="sound-off" />
+        </div>
+
+        <div id="fullscreen">
+          <img
+            src="./img/buttons/full-screen.svg"
+            alt="fullScreen"
+            onclick="fullScreen()"
+          />
+        </div>
+      </div>
+
+      <div id="startScreen">
+        <div class="btnTopBar">
+          <div>
+            <span onclick="startGame()">Start Game</span>
+          </div>
+
+          <div>
+            <span onclick="toggleGameInfos()">Game Infos</span>
+          </div>
+        </div>
+        <img
+          src="./img/9_intro_outro_screens/start/startscreen_2.png"
+          class="screenBorder"
+          width="720"
+          height="480"
+          alt="Start Game Image"
+        />
+
+        <div
+          id="gameInfoContainer"
+          class="infoBoxContainer d-none"
+          onclick="toggleGameInfos()"
+        >
+          <div class="gameControlInfos">
+            <table>
+              <h2>Game Controls</h2>
+              <tr>
+                <td>Walking Left:</td>
+                <td>Arrow Key Left</td>
+              </tr>
+              <tr>
+                <td>Walking Right:</td>
+                <td>Arrow Key Right</td>
+              </tr>
+              <tr>
+                <td>Jump:</td>
+                <td>Space</td>
+              </tr>
+              <tr>
+                <td>Throw Bottle:</td>
+                <td>D-Key</td>
+              </tr>
+            </table>
+            <div class="infoGameStory">
+              <h2>How to play</h2>
+              <p></p>
+              <ul>
+                <li>
+                  you can only collect bottles until your status bar is full. if
+                  you need more go back and get new ones
+                </li>
+                <li>
+                  If you have collected more coins than fit in your status bar,
+                  your life energy will be refilled
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="winScreen" class="d-none">
+        <div class="btnTopBar">
+          <span onclick="goToHome()">Home</span>
+          <span onclick="startGame()">New Game</span>
+        </div>
+        <img
+          src="./img/9_intro_outro_screens/win/won_2.png"
+          class="screenBorder"
+          width="720"
+          height="480"
+          alt="winning Image"
+        />
+      </div>
+      <div id="loseScreen" class="d-none">
+        <div class="btnTopBar">
+          <span onclick="goToHome()">Home</span>
+          <span onclick="startGame()">New Game</span>
+        </div>
+        <img
+          src="./img/9_intro_outro_screens/game_over/you lost.png"
+          class="screenBorder"
+          width="720"
+          height="480"
+          alt="loseImg"
+        />
+      </div>
+      <canvas
+        id="canvas"
+        class="screenBorder d-none"
+        width="720"
+        height="480"
+      ></canvas>
+
+      <div id="mobileBtnContainer" class="mobileBtnContainer d-none">
+        <div class="mobileBtnPosition">
+          <div>
+            <button class="mobileBtn">
+              <img
+                id="btnLeft"
+                src="./img/mobile/left-walk.png"
+                alt="mobileLeft"
+              />
+            </button>
+            <button class="mobileBtn">
+              <img
+                id="btnRight"
+                src="./img/mobile/right-walk.png"
+                alt="mobileRight"
+              />
+            </button>
+          </div>
+          <div>
+            <button class="mobileBtn">
+              <img
+                id="btnJump"
+                src="./img/mobile/jump-btn.png"
+                alt="mobileJump"
+              />
+            </button>
+            <button class="mobileBtn">
+              <img
+                id="btnThrow"
+                src="./img/mobile/throw-btn.png"
+                alt="mobileThrow"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="turnDeviceContainer">
+      <img src="./img/turnDevice.png" alt="turn yout device" />
+      <span>Please turn your device to play.</span>
+    </div>
+
+    <footer>
+      <a href="./impressum.html" target="_blank">Impressum</a> |
+      <a href="./disclaimer.html" target="_blank">Disclaimer</a>
+    </footer>
+  </body>
+</html>
